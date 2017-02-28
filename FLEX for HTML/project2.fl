@@ -1,0 +1,68 @@
+/* Brendan Carlisle */
+/* Project 2 */
+/* CS330 - Spring 2016 */
+/* Flex for HTML */
+
+%option noyywrap
+%{
+	int lineNum = 1;
+%}
+
+/* specifies html tags */
+
+HTML_BEGIN	"<html>"
+HTML_END	"</html>"
+HEAD_BEGIN	"<head>"
+HEAD_END	"</head>"
+BODY_BEGIN	"<body>"
+BODY_END	"</body>"
+TITLE_BEGIN	"<title>"
+TITLE_END	"</title>"
+
+%%
+
+/* keeps track of line numbers */
+\n	++lineNum;
+
+/* tracks where html tags are in the file */
+
+{HTML_BEGIN}	{
+		printf(	"HTML_BEGIN at line: %d\n", lineNum);
+		}
+{HEAD_BEGIN}	{
+		printf(	"HEAD_BEGIN at line: %d\n", lineNum);
+		}
+{BODY_BEGIN}	{
+		printf(	"BODY_BEGIN at line: %d\n", lineNum);
+		}
+{TITLE_BEGIN}	{
+		printf(	"TITLE_BEGIN at line: %d\n", lineNum);
+		}
+{HEAD_END}      {
+		printf( "HEAD_END at line: %d\n", lineNum);
+		}
+{TITLE_END}	{
+		printf(	"TITLE_END at line: %d\n", lineNum);
+		}
+{BODY_END}      {
+                printf( "BODY_END at line: %d\n", lineNum);
+		}
+{HTML_END}      {
+                printf( "HTML_END at line: %d\n", lineNum);
+		}
+.*		/* Skip unnecessary text */
+
+%%
+
+/* main */
+
+int main( int argc, char **argv ){
+    ++argv, ++argc;
+    if((fopen(argv[0], "r")) != NULL){
+    	yyin = fopen(argv[0], "r");
+    } else {
+        fprintf(stderr, "Error opening file\n");
+	exit(EXIT_FAILURE);
+    }
+    yylex();
+}

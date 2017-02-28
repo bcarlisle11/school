@@ -1,0 +1,61 @@
+/* Brendan Carlisle */
+/* Project 2 */
+/* CS330 - Spring 2016 */
+/* Flex for HTML */
+
+%option noyywrap
+%{
+	int lineNum = 0;
+%}
+
+HTML_BEGIN	"<html>"
+HTML_END	"</html>"
+HEAD_BEGIN	"<head>"
+HEAD_END	"</head>"
+BODY_BEGIN	"<body>"
+BODY_END	"</body>"
+TITLE_BEGIN	"<title>"
+TITLE_END	"</title>"
+
+%%
+
+\n	++lineNum;
+
+{HTML_BEGIN}	{
+		printf(	"HTML_BEGIN at line: %d\n", lineNum);
+		}
+{HEAD_BEGIN}	{
+		printf(	"HEAD_BEGIN at line: %d\n", lineNum);
+		}
+{BODY_BEGIN}	{
+		printf(	"BODY_BEGIN at line: ");
+		}
+{TITLE_BEGIN}	{
+		printf(	"TITLE_BEGIN at line: ");
+		}
+{HEAD_END}      {
+		printf( "HEAD_END at line: ");
+		}
+{TITLE_END}	{
+		printf(	"TITLE_END at line: ");
+		}
+{BODY_END}      {
+                printf( "BODY_END at line: ");
+		}
+{HTML_END}      {
+                printf( "HTML_END at line: ");
+		}
+.*		/* Skip unneccessary text */
+
+%%
+
+int main( int argc, char **argv ){
+    ++argv, ++argc;
+    if((fopen(argv[0], "r")) != NULL){
+    	yyin = fopen(argv[0], "r");
+    } else {
+        fprintf(stderr, "Error opening file\n");
+	exit(EXIT_FAILURE);
+    }
+    yylex();
+}
