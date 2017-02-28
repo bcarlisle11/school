@@ -1,0 +1,30 @@
+body {
+    background-color: darkgray;
+    color: black;
+    font-family: "Courier New";
+    text-align: center;
+}
+
+#section {
+    text-align: center;
+    padding: 6px;
+    margin: auto;
+}
+
+#header {
+    font-family: "Courier New";
+    text-align: center;   
+    padding: 6px;
+}
+
+#form {
+    text-align: center;
+    font-weight: bold;
+    align-content: center;
+}
+
+#footer {
+    text-align:center;
+    font-weight:bold;
+    padding:6px;
+}
